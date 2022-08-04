@@ -4,18 +4,18 @@ defmodule PDF417.LowLevelEncoder do
 
   import PDF417.Clusters
 
-  def encode(codewords, config) do
-    codewords
-    |> make_matrix(config)
-    |> Enum.map(fn row -> [@start_pattern | convert_to_codewords(row)] ++ @stop_pattern end)
+  def encode(barcode) do
+    barcode
+    |> make_matrix()
+    |> Enum.map(fn row -> [@start_pattern | convert_to_codewords(row)] ++ [@stop_pattern] end)
   end
 
   defp convert_to_codewords({row, cluster}) do
     Enum.map(row, fn codeword -> map_code_word(cluster, codeword) end)
   end
 
-  defp make_matrix(codewords, config = %{columns: columns}, func) do
-    total_rows = floor(codewords.length / columns)
+  defp make_matrix(config = %{columns: columns, codewords: codewords}) do
+    total_rows = floor(length(codewords) / columns)
 
     codewords
     |> Enum.chunk_every(columns)
@@ -25,14 +25,14 @@ defmodule PDF417.LowLevelEncoder do
 
       [left, right] =
         row_indicators(cluster, total_rows, config)
-        |> Enum.map(fn ind -> (30 * row_index / 3 + ind) |> floor() end)
+        |> Enum.map(fn ind -> 30 * floor(row_index / 3) + ind end)
 
       {[left | row] ++ [right], cluster}
     end)
   end
 
   defp row_indicators(cluster, row_count, %{columns: columns, security_level: security_level}) do
-    f1 = (row_count - 1) / 3
+    f1 = floor((row_count - 1) / 3)
     f2 = columns - 1
     f3 = security_level * 3 + rem(row_count - 1, 3)
 

@@ -4,15 +4,15 @@ defmodule PDF417.HighLevelEncoderTest do
 
   describe "encode" do
     test "equals the number of message and padding codewords plus itself" do
-      assert [4 | _rest] =
-               HighLevelEncoder.encode(%{message: "AB", columns: 6, security_level: 0})
+      barcode = HighLevelEncoder.encode(%{message: "AB", columns: 6, security_level: 0})
+      assert [4 | _rest] = barcode.codewords
     end
 
     test "adds padding to fill empty columns" do
       barcode =
         HighLevelEncoder.encode(%{message: "NNNNNNNNNNNNNNNN", columns: 8, security_level: 0})
 
-      assert barcode == [
+      assert barcode.codewords == [
                14,
                403,
                403,

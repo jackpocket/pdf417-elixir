@@ -3,11 +3,14 @@ defmodule PDF417.HighLevelEncoder do
 
   @pad_codeword 900
 
-  def encode(%{message: message, columns: columns, security_level: security_level}) do
-    CompactionManager.compact(message)
-    |> padding(security_level, columns)
-    |> add_length_descriptor()
-    |> error_correction(security_level)
+  def encode(barcode = %{message: message, columns: columns, security_level: security_level}) do
+    codewords =
+      CompactionManager.compact(message)
+      |> padding(security_level, columns)
+      |> add_length_descriptor()
+      |> error_correction(security_level)
+
+    Map.put(barcode, :codewords, codewords)
   end
 
   defp padding(codewords, security_level, columns) do
