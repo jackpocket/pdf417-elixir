@@ -5,11 +5,12 @@ A library in pure elixir (no NIFs) to generate PDF417 barcodes. Currently only t
 ## Todo
 
 * Write images from the `LowLevelEncoder` output
+* Documentation
 * Add support for the binary modes
 
 ## Notes
 
-This library owes a large debt to all the other open source versions of encoders; it's a direct port of the [Ruby version](https://github.com/bnix/pdf417-rb), incorporating some ideas from the [Javascript version](http://bkuzmic.github.io/pdf417-js/). 
+This library owes a large debt to all the other open source versions of encoders; it's a direct port of the [Ruby version](https://github.com/bnix/pdf417-rb), incorporating some ideas from the [Javascript version](http://bkuzmic.github.io/pdf417-js/).
 
 ## Installation
 
