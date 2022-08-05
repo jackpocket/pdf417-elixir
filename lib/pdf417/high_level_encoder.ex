@@ -1,4 +1,9 @@
 defmodule PDF417.HighLevelEncoder do
+  @moduledoc """
+  This encoder takes the input String and converts it to an array of numbers 0-917.
+  Currently supported are two modes, text (ASCII), and numeric. 
+  """
+
   alias PDF417.{CompactionManager, ErrorCorrection}
 
   @pad_codeword 900
