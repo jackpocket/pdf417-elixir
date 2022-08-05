@@ -1,4 +1,8 @@
 defmodule PDF417.TextCompactor do
+  @moduledoc """
+  Converts text to compacted form, each letter pair becomes a number 0-899
+  """
+
   @submodes %{
     "UPP" =>
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ\s" |> String.graphemes() |> Enum.with_index() |> Map.new(),

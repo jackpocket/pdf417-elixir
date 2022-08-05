@@ -1,6 +1,10 @@
 defmodule PDF417.CompactionManager do
   alias PDF417.{NumberCompactor, TextCompactor}
 
+  @moduledoc """
+  Picks which mode to compact a region of text with, and does the compaction.
+  """
+
   def compact(message) do
     message
     |> String.split(~r/[0-9]{13,44}/, include_captures: true)

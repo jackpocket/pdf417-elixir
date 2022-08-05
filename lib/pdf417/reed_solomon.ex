@@ -1,4 +1,7 @@
 defmodule PDF417.ReedSolomon do
+  @moduledoc """
+  Factors for Reed-Solomon error correction
+  """
   def factors,
     do: [
       [

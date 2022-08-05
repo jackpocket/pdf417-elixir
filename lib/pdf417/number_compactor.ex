@@ -1,4 +1,7 @@
 defmodule PDF417.NumberCompactor do
+  @moduledoc """
+  Converts numbers to compacted form, as an array of base 900 digits
+  """
   def compact(part) do
     ("1" <> part)
     |> String.to_integer()

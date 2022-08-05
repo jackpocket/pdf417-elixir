@@ -1,0 +1,65 @@
+---
+name: BARDECODE CI
+
+on:
+  push:
+    paths:
+      - "**"
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+concurrency:
+  group: pdf417-ci-${{ github.ref }}-1
+  cancel-in-progress: true
+
+
+env:
+  MIX_ENV: test
+
+jobs:
+  validate:
+    name: Run CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: "1.13.4"
+          otp-version: "24.3.3"
+
+      - name: Elixir version
+        run: iex --version
+
+      - name: Install Hex and Rebar
+        run: |
+          mix local.hex --force && mix local.rebar --force
+
+      - name: Retrieve Cached Dependencies
+        id: mix-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./deps
+            ./_build
+          key: mix-${{ hashFiles('mix.lock') }}-${{ hashFiles('.github/workflows/pdf417.yml')}}
+
+      - name: Install and compile dependencies
+        if: steps.mix-cache.outputs.cache-hit != 'true'
+        run: |
+          mix deps.get
+          mix deps.compile
+          mix compile
+
+      - name: Check Formatting
+        run: |
+          mix format --check-formatted
+
+      - name: Check Coverage and Tests
+        run: |
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/usr/local/lib
+          export PATH=$PATH:/usr/lib/x86_64-linux-gnu:/usr/local/lib
+          mix coveralls
