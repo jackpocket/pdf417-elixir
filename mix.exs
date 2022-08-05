@@ -11,6 +11,7 @@ defmodule PDF417.MixProject do
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       package: package(),
+      test_coverage: [tool: ExCoveralls],
       deps: deps(),
       docs: docs()
     ]
