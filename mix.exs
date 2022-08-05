@@ -7,6 +7,7 @@ defmodule PDF417.MixProject do
   def project do
     [
       app: :pdf417,
+      description: description(),
       version: @version,
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
@@ -24,11 +25,14 @@ defmodule PDF417.MixProject do
     ]
   end
 
+  def description do
+    "PDF417 Barcode generation library."
+  end
+
   defp package do
     [
       name: "pdf417",
-      descrption: "PDF417 Barcode generation library",
-      organization: "jackpocket",
+      description: description(),
       links: %{"GitHub" => @source_url},
       licenses: ["MIT"]
     ]
@@ -39,7 +43,7 @@ defmodule PDF417.MixProject do
     [
       {:excoveralls, "~> 0.14", only: [:test]},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:ex_doc, ">= 0.0.0", only: :docs, runtime: false},
+      {:ex_doc, ">= 0.0.0", only: [:docs, :dev, :test], runtime: false},
       {:png, "~> 0.2.1"}
     ]
   end

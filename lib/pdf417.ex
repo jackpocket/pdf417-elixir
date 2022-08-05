@@ -30,7 +30,7 @@ defmodule PDF417 do
   """
   def encode_to_file(message, file_path, options \\ %{}) do
     {:ok, iodata} = encode(message, options)
-    File.write(iodata, file_path)
+    File.write(file_path, iodata)
   end
 
   @doc """

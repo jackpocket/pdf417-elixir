@@ -1,5 +1,8 @@
 # PDF417
 
+![](https://raw.githubusercontent.com/jackpocket/pdf417-elixir/main/sample.png)
+
+
 A library in pure elixir (no NIFs) to generate PDF417 barcodes. Currently only the text and large number modes are supported.
 
 ## Todo
