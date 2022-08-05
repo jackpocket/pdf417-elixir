@@ -15,7 +15,7 @@ defmodule PDF417.LowLevelEncoder do
   end
 
   defp make_matrix(config = %{columns: columns, codewords: codewords}) do
-    total_rows = floor(length(codewords) / columns)
+    total_rows = div(length(codewords), columns)
 
     codewords
     |> Enum.chunk_every(columns)
@@ -25,14 +25,14 @@ defmodule PDF417.LowLevelEncoder do
 
       [left, right] =
         row_indicators(cluster, total_rows, config)
-        |> Enum.map(fn ind -> 30 * floor(row_index / 3) + ind end)
+        |> Enum.map(fn ind -> 30 * div(row_index, 3) + ind end)
 
       {[left | row] ++ [right], cluster}
     end)
   end
 
   defp row_indicators(cluster, row_count, %{columns: columns, security_level: security_level}) do
-    f1 = floor((row_count - 1) / 3)
+    f1 = div(row_count - 1, 3)
     f2 = columns - 1
     f3 = security_level * 3 + rem(row_count - 1, 3)
 
