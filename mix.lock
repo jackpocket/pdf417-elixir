@@ -1,0 +1,3 @@
+%{
+  "png": {:hex, :png, "0.2.1", "b25c17c8dcdc40096d46ae2d7c2777c63fede48fa8c8312cc708c88554049d3b", [:rebar3], [], "hexpm", "279345e07108c604871a21f1c91f716810ab559af2b20d6f302e0a98265ef72e"},
+}

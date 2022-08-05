@@ -4,8 +4,6 @@ A library in pure elixir (no NIFs) to generate PDF417 barcodes. Currently only t
 
 ## Todo
 
-* Write images from the `LowLevelEncoder` output
-* Documentation
 * Add support for the binary modes
 
 ## Notes

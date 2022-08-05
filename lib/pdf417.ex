@@ -25,11 +25,17 @@ defmodule PDF417 do
     |> PNGEncoder.encode()
   end
 
+  @doc """
+  Same as `encode/2`, but takes a file path option, and writes the PNG data to a file you specify
+  """
   def encode_to_file(message, file_path, options \\ %{}) do
     {:ok, iodata} = encode(message, options)
     File.write(iodata, file_path)
   end
 
+  @doc """
+  Same as `encode/2`, but returns a base64 encoded string.
+  """
   def encode_to_base64(message, options \\ %{}) do
     {:ok, iodata} = encode(message, options)
     Base.encode64(IO.iodata_to_binary(iodata))
