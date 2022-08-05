@@ -59,7 +59,7 @@ jobs:
           mix format --check-formatted
 
       - name: Check Coverage and Tests
-        run: |
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/usr/local/lib
-          export PATH=$PATH:/usr/lib/x86_64-linux-gnu:/usr/local/lib
-          mix coveralls
+        run: mix coveralls
+
+      - name: Credo
+        run: mix credo --strict
