@@ -1,5 +1,5 @@
 ---
-name: BARDECODE CI
+name: PDF417 CI
 
 on:
   push:
