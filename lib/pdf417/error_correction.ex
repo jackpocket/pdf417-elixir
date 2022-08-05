@@ -1,4 +1,7 @@
 defmodule PDF417.ErrorCorrection do
+  @moduledoc """
+  Calculates Reed-Solomon error correction codewords for a given message and security level
+  """
   import PDF417.ReedSolomon, only: [factors: 0]
 
   def correction_codewords(codewords, security_level) do

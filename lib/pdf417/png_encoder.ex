@@ -1,7 +1,9 @@
 defmodule PDF417.PNGEncoder do
-  # the matrix we're getting is a grid of integers, which when converted to binary represent the
-  # individual codes in PDF417. They're all 17 binary digits; each bar of the 17 is @bar_width px wide and
-  # 3*@bar_width px tall.
+  @moduledoc """
+    Takes a grid (matrix) of integers and turns them into a PNG. All the integers in the grid need
+    to be 17-digits in base 2, with the exception of the stop character, which per the standard has
+    one extra bit.
+  """
 
   @black 0
   @white 255

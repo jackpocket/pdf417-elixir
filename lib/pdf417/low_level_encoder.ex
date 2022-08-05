@@ -1,4 +1,11 @@
 defmodule PDF417.LowLevelEncoder do
+  @moduledoc """
+  This module takes the output from the HighLevelEncoder and converts it to the integers
+  that represent the codewords in binary, and outputs a 2d matrix of those numbers. The codewords
+  are stored in clusters.ex, as the standard has three versions used so that no two lines will ever
+  repeat the same codeword.
+  """
+
   @start_pattern 0x1FEA8
   @stop_pattern 0x3FA29
 

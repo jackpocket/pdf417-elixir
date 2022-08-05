@@ -1,4 +1,7 @@
 defmodule PDF417.Clusters do
+  @moduledoc """
+  Clusters are the different representations of the 917 codewords in the standard.
+  """
   @bank1 [
     0x1D5C0,
     0x1EAF0,
