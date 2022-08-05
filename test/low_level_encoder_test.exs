@@ -1,7 +1,7 @@
 defmodule PDF417.LowLevelEncoderTest do
   use ExUnit.Case
-  alias PDF417.LowLevelEncoder
   alias PDF417.HighLevelEncoder
+  alias PDF417.LowLevelEncoder
 
   describe "encode" do
     test "it returns an array of the correct symbols" do
