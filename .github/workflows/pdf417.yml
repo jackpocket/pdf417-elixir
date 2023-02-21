@@ -52,7 +52,7 @@ jobs:
         run: |
           mix deps.get
           mix deps.compile
-          mix compile
+          mix compile --warnings-as-errors
 
       - name: Check Formatting
         run: |
