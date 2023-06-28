@@ -15,7 +15,7 @@ This library owes a large debt to all the other open source versions of encoders
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+If [available in Hex](https://hex.pm/packages/pdf417), the package can be installed
 by adding `pdf417` to your list of dependencies in `mix.exs`:
 
 ```elixir
