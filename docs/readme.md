@@ -1,75 +1,31 @@
-# jackpocket-ops-protobuf
-Protobuf IDL for Operations
+# PDF417
 
-## Setup
-`sudo apt install protobuf-compiler=25.4`(Linux) or `brew install protobuf@25.4`(Mac)
-`mix escript.install hex protobuf`
-
-## Generating pb files for Elixir
-`cd proto_builder_ex`
-`./generate.sh`
-
-This will create pb files in the output directory
-
-## Generating pb files for Ruby
-`cd proto_builder_rb`
-`./generate.sh`
-
-This will create pb files in the output directory
-
-## Generating pb files for Java
-`cd proto_builder_java`
-`./generate.sh`
-
-This will create pb files in the output directory
-
-## Publishing new libraries
-
-### Adding new protobuf definitions
-The pom.xml file will need to be edited to add any new protobuf definitions to be published to Confluent Schema Registry. There are two areas of the file that need to be modified, the validate and register sections. Both will require full paths to the new protobuf files as well as a reference definition if the added protobuf imports other protobuf files.
-
-### For Elixir
-`cd proto_builder_ex/proto`
-Update the version in `mix.exs`
-`mix publish`
-- This is an alias that cleans out previously generated code,
-- regenerates the protobuf files,
-- and publishes to our private Hex org
-
-### For Java
-`cd proto_builder_java/proto`
-Update the version in `build.gradle`
-tagging with java-vX.X.X will then publish to our private maven repo
+![](https://raw.githubusercontent.com/jackpocket/pdf417-elixir/main/sample.png)
 
 
-### Linter
-We use [protolint](https://github.com/yoheimuta/protolint). You can install it with:
+A library in pure elixir (no NIFs) to generate PDF417 barcodes. Currently only the text and large number modes are supported.
 
-```
-npm i -g protolint
+## Todo
+
+* Add support for the binary modes
+
+## Notes
+
+This library owes a large debt to all the other open source versions of encoders; it's a direct port of the [Ruby version](https://github.com/bnix/pdf417-rb), incorporating some ideas from the [Javascript version](http://bkuzmic.github.io/pdf417-js/).
+
+## Installation
+
+If [available in Hex](https://hex.pm/packages/pdf417), the package can be installed
+by adding `pdf417` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:pdf417, "~> 0.1.0"}
+  ]
+end
 ```
 
-And run:
-
-```
-protolint lint .
-```
-
-## Troubleshoot
-
-If the CI build is failing, try making sure your local protoc version is 25.4.
-
-e.g. in Linux
-
-```
- $ protoc --version
-libprotoc 25.4
-```
-
-To download the correct version e.g.
-
-```
-PB_REL="https://github.com/protocolbuffers/protobuf/releases"
-wget $PB_REL/download/v25.4/protoc-25.4-linux-x86_64.zip
-unzip protoc-25.4-linux-x86_64.zip -d $HOME/.local
-```
+Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
+be found at [https://hexdocs.pm/pdf417](https://hexdocs.pm/pdf417).
