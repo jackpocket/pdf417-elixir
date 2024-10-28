@@ -1,0 +1,30 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pdf417-elixir
+  description: A library in pure elixir (no NIFs) to generate PDF417 barcodes. Currently only the text and large number modes are supported.
+  # https://backstage.io/docs/features/software-catalog/
+  annotations:
+    backstage.io/linguist: https://github.com/jackpocket/pdf417-elixir
+    # format: organization/team
+    github.com/team-slug: jackpocket/tech-ops-beta-elixir-snr-swe
+    # format: organization/repository
+    github.com/project-slug: jackpocket/pdf417-elixir
+    # path to mkdocs.yml
+    backstage.io/techdocs-ref: dir:.
+    # https://roadie.io/backstage/plugins/jira/
+    jira/project-key: TOB
+    jira/token-type: Bearer
+    backstage.io/kubernetes-label-selector: 'app=pdf417-elixir'
+  tags:
+    - pdf
+  links:
+    - title: Slack ops beta channel
+      url: https://draftkings.enterprise.slack.com/archives/C031F58CC12
+spec:
+  type: library
+  owner: group:backend
+  lifecycle: production
+  providesApis:
+    - pdf417-elixir

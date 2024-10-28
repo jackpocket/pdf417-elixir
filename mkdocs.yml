@@ -1,0 +1,7 @@
+site_name: pdf417-elixir
+site_description: A library in pure elixir (no NIFs) to generate PDF417 barcodes. Currently only the text and large number modes are supported.
+docs_dir: docs
+plugins:
+  - techdocs-core
+  - kroki:
+      ServerURL: "https://kroki.jackpocket.com"

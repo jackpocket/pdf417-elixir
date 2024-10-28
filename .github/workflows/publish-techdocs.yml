@@ -1,0 +1,35 @@
+name: Publish TechDocs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+    types: [opened, reopened, synchronize]
+
+concurrency:
+  group: pdf417-ci-${{ github.ref }}-1
+  cancel-in-progress: true
+
+env:
+  elixir: "1.13.4"
+  otp: "24.3.3"
+  node: "16"
+  HEX_KEY: ${{ secrets.HEX_KEY }}
+
+jobs:
+  publish_techdocs:
+    name: Publish TechDocs
+    uses: jackpocket/jackpocket-github-workflows/.github/workflows/publish-techdocs.yml@main
+    secrets:
+      TECHDOCS_GCS_BUCKET_NAME: ${{ secrets.TECHDOCS_GCS_BUCKET_NAME }}
+      GCR_JSON_CREDENTIALS: ${{ secrets.GCR_JSON_CREDENTIALS }}
+    with:
+      entity-namespace: default
+      copy-readme-file: ./README.md
+      docs-directory: ./docs
