@@ -23,13 +23,64 @@ env:
   HEX_KEY: ${{ secrets.HEX_KEY }}
 
 jobs:
-  publish_techdocs:
-    name: Publish TechDocs
-    uses: jackpocket/jackpocket-github-workflows/.github/workflows/publish-techdocs.yml@main
-    secrets:
+  publish-techdocs-site:
+    runs-on: ubuntu-latest
+    env:
       TECHDOCS_GCS_BUCKET_NAME: ${{ secrets.TECHDOCS_GCS_BUCKET_NAME }}
-      GCR_JSON_CREDENTIALS: ${{ secrets.GCR_JSON_CREDENTIALS }}
-    with:
-      entity-namespace: default
-      copy-readme-file: ./README.md
-      docs-directory: ./docs
+      GCP_JSON_KEY: ${{ secrets.GCR_JSON_CREDENTIALS }}
+      ENTITY_NAMESPACE: default
+      ENTITY_KIND: library
+      ENTITY_NAME: pdf417-elixir
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      - name: Verify Kroki ServerURL is defined if Kroki plugin is used
+        shell: bash
+        run: |
+          mkdocsOutput=$(cat mkdocs.yml)
+          if [[ ! "$mkdocsOutput" =~ "- kroki" ]]; then
+            echo "Kroki not defined; exiting normally"
+            exit 0
+          elif [[ ! "$mkdocsOutput" =~ "ServerURL: \"https://kroki.jackpocket.com\"" ]]; then
+            echo "Kroki ServerURL not defined as https://kroki.jackpocket.com; terminating"
+            exit 1
+          fi
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCR_JSON_CREDENTIALS }}
+
+      - uses: actions/setup-node@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install techdocs-cli
+        run: sudo npm install -g @techdocs/cli
+
+      - name: Install mkdocs and mkdocs plugins
+        run: python -m pip install mkdocs-techdocs-core mkdocs-kroki-plugin
+
+      - name: Copy readme to docs directory
+        env:
+          README_FILE: ./README.md
+          DOCS_DIR: ./docs
+        run: cp "$README_FILE" "$DOCS_DIR"
+
+      - name: Generate docs site
+        run: techdocs-cli generate --no-docker --verbose
+
+      - name: Set default entity-name for publication
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: echo "ENTITY_NAME=$REPO_NAME" >> "$GITHUB_ENV"
+
+      - name: Publish docs site
+        run: |
+          techdocs-cli publish \
+            --publisher-type googleGcs \
+            --storage-name "$TECHDOCS_GCS_BUCKET_NAME" \
+            --entity "$ENTITY_NAMESPACE/$ENTITY_KIND/$ENTITY_NAME"
