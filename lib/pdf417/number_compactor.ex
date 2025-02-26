@@ -9,7 +9,7 @@ defmodule PDF417.NumberCompactor do
   end
 
   def compactable?(part) do
-    String.length(part) > 13 && Integer.parse(part) != :error
+    String.length(part) > 13 && String.match?(part, ~r/^\d+$/)
   end
 
   def codeword, do: 902
