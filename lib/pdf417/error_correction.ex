@@ -13,7 +13,7 @@ defmodule PDF417.ErrorCorrection do
       t1 = rem(codeword + List.last(int_error_cw), 929)
 
       int_error_cw =
-        (length(int_error_cw) - 1)..1
+        Range.new(length(int_error_cw) - 1, 1, -1)
         |> Enum.reduce(int_error_cw, fn j, acc ->
           t2 = rem(t1 * Enum.at(coefficients, j), 929)
           t3 = 929 - t2
