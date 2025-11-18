@@ -45,7 +45,7 @@ defmodule PDF417.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: [:docs, :dev, :test], runtime: false},
       {:png, "~> 0.2.1"},
-      {:ssl_verify_fun, "~> 1.1.7", override: true}
+      {:ssl_verify_fun, "~> 1.1.7"}
     ]
   end
 
