@@ -31,5 +31,18 @@ defmodule PDF417.HighLevelEncoderTest do
                132
              ]
     end
+
+    test "uses byte compaction when compaction: :byte is given" do
+      barcode =
+        HighLevelEncoder.encode(%{
+          message: "abcdef",
+          columns: 6,
+          security_level: 0,
+          compaction: :byte
+        })
+
+      # codewords start with the length descriptor, then the byte-compaction output
+      assert [_length, 924, 163, 179, 507, 603, 522 | _padding] = barcode.codewords
+    end
   end
 end

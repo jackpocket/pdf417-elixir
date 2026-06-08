@@ -5,7 +5,7 @@ defmodule PDF417 do
 
   alias PDF417.{HighLevelEncoder, LowLevelEncoder, PNGEncoder}
 
-  @default_options %{columns: 4, security_level: 3, message: ""}
+  @default_options %{columns: 4, security_level: 3, message: "", compaction: :auto}
 
   @doc """
   Renders the given message in png image format. Returns iodata that can be written to a file or
@@ -13,6 +13,7 @@ defmodule PDF417 do
   ## Options
   * `:columns` - Defaults to 4. The number of columns in your symbol output.
   * `:security_level` - Defaults to 3, which is sufficient for up to 160 data codewords (about 320 characters of text). Every 320 characters, add one level here, up to level 8.
+  * `:compaction` - Defaults to `:auto` (text/numeric auto-detection). Set to `:byte` to encode the whole message with Byte Compaction, which supports arbitrary bytes (e.g. UTF-8 multi-byte characters).
   """
   def encode(message, options \\ %{}) do
     options =
