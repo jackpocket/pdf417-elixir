@@ -1,7 +1,7 @@
 defmodule PDF417.HighLevelEncoder do
   @moduledoc """
   This encoder takes the input String and converts it to an array of numbers 0-917.
-  Currently supported are two modes, text (ASCII), and numeric. 
+  Currently supported are three modes: text (ASCII), numeric, and byte.
   """
 
   alias PDF417.{CompactionManager, ErrorCorrection}
@@ -9,8 +9,10 @@ defmodule PDF417.HighLevelEncoder do
   @pad_codeword 900
 
   def encode(barcode = %{message: message, columns: columns, security_level: security_level}) do
+    compaction = Map.get(barcode, :compaction, :auto)
+
     codewords =
-      CompactionManager.compact(message)
+      CompactionManager.compact(message, compaction)
       |> padding(security_level, columns)
       |> add_length_descriptor()
       |> error_correction(security_level)

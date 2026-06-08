@@ -21,4 +21,20 @@ defmodule PDF417.CompactionManagerTest do
                CompactionManager.compact("12345678912345deadbeef")
     end
   end
+
+  describe "byte compaction mode" do
+    test "routes the whole message to the byte compactor" do
+      assert CompactionManager.compact("abcdef", :byte) ==
+               PDF417.ByteCompactor.compact("abcdef")
+    end
+
+    test "defaults to auto mode for arity-1 calls" do
+      assert CompactionManager.compact("ABCDE") == CompactionManager.compact("ABCDE", :auto)
+    end
+
+    test "byte mode differs from auto for the same input" do
+      refute CompactionManager.compact("abcdef", :byte) ==
+               CompactionManager.compact("abcdef", :auto)
+    end
+  end
 end

@@ -1,11 +1,17 @@
 defmodule PDF417.CompactionManager do
-  alias PDF417.{NumberCompactor, TextCompactor}
+  alias PDF417.{ByteCompactor, NumberCompactor, TextCompactor}
 
   @moduledoc """
   Picks which mode to compact a region of text with, and does the compaction.
   """
 
-  def compact(message) do
+  def compact(message, mode \\ :auto)
+
+  def compact(message, :byte) do
+    ByteCompactor.compact(message)
+  end
+
+  def compact(message, :auto) do
     message
     |> String.split(~r/[0-9]{13,44}/, include_captures: true)
     |> Enum.filter(fn s -> s != "" end)
